@@ -7,6 +7,7 @@ A cottagecore-themed schedule and goal-tracking web app.
 - **`index.html`** — marketing landing page (hero, features, "how it grows" timeline, CTA)
 - **`calendar.html`** — main calendar dashboard: week view with color-coded events, mini month picker, and goal progress bars styled as vines on a trellis
 - **`goals.html`** — goals page: cards with a circular forest-green progress ring per goal, expandable weekly to-do lists with leaf-shaped checkboxes, and a seedling illustration for the empty state
+- **`signup.html`** / **`login.html`** — split-layout auth screens: a full-bleed illustration of an ivy-covered cottage and beehive on the left, form on beige with sage-outlined inputs (forest on focus), a forest-green primary button, and a "Continue with Google" secondary button
 
 All pages are self-contained HTML files — no build step required. Open directly in a browser, or enable **GitHub Pages** (Settings → Pages → Deploy from branch → `main` / root) to serve them live.
 
