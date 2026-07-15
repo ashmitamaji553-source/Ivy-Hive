@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ivy-Hive — Goals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --beige:#F5EFE3;
+    --cream:#FBF8F1;
+    --sage:#A8B79A;
+    --sage-soft:#C9D4BE;
+    --sage-line:#D9E1CF;
+    --forest:#3B5D42;
+    --forest-deep:#2C4A33;
+    --honey:#D9A24B;
+    --honey-soft:#F1D9AC;
+    --ink:#33402F;
+    --ink-soft:#68765F;
+    --ink-faint:#98A48D;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;color:var(--ink);font-family:'Nunito',sans-serif;
+    background:var(--beige);
+  }
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;color:var(--forest-deep);margin:0;}
+  button{font-family:inherit;}
+  :focus-visible{outline:3px solid var(--honey);outline-offset:2px;border-radius:4px;}
+
+  /* ============ TOP NAV ============ */
+  .topnav{
+    background:var(--forest);color:var(--cream);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:12px 28px;position:sticky;top:0;z-index:50;
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand span{font-family:'Fraunces',serif;font-size:20px;font-weight:600;}
+  .nav-links{display:flex;gap:30px;margin-left:12px;}
+  .nav-links a{color:var(--sage-soft);font-weight:700;font-size:14.5px;padding-bottom:3px;border-bottom:2px solid transparent;}
+  .nav-links a.active{color:var(--cream);border-color:var(--honey);}
+  .nav-mid{display:flex;align-items:center;flex:1;}
+  .nav-right{display:flex;align-items:center;gap:14px;}
+  .new-btn{
+    display:inline-flex;align-items:center;gap:6px;
+    background:var(--honey);color:var(--forest-deep);border:none;font-weight:800;font-size:13.5px;
+    padding:10px 20px;border-radius:12px;cursor:pointer;transition:background .2s, transform .2s;
+  }
+  .new-btn:hover{background:var(--honey-soft);transform:translateY(-1px);}
+  .avatar{
+    width:36px;height:36px;border-radius:50%;background:var(--sage);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;color:var(--forest-deep);font-size:14px;
+    border:2px solid var(--cream);
+  }
+
+  /* ============ PAGE HEAD ============ */
+  .page{max-width:1180px;margin:0 auto;padding:36px 28px 80px;}
+  .page-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:30px;}
+  .page-head h1{font-size:30px;}
+  .page-head p{color:var(--ink-soft);margin-top:8px;font-size:15.5px;}
+  .demo-toggle{
+    border:1px solid var(--sage-soft);background:var(--cream);color:var(--forest);
+    font-weight:800;font-size:13px;padding:9px 16px;border-radius:10px;cursor:pointer;
+  }
+  .demo-toggle:hover{background:var(--sage-soft);}
+
+  /* ============ GOAL GRID ============ */
+  .goal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px;}
+
+  .goal-card{
+    background:var(--cream);border:1px solid var(--sage-soft);border-radius:20px;
+    padding:26px 26px 22px;
+  }
+  .goal-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;}
+  .goal-title{font-size:19px;line-height:1.3;}
+  .goal-deadline{
+    display:inline-flex;align-items:center;gap:6px;margin-top:10px;
+    font-size:12.5px;font-weight:800;color:var(--forest);background:var(--sage-soft);
+    padding:5px 12px;border-radius:999px;
+  }
+  .goal-deadline.urgent{background:var(--honey-soft);color:#8A5A17;}
+
+  /* ring */
+  .ring-wrap{position:relative;width:76px;height:76px;flex-shrink:0;}
+  .ring-wrap svg{width:76px;height:76px;transform:rotate(-90deg);}
+  .ring-track{fill:none;stroke:var(--sage-line);stroke-width:7;}
+  .ring-fill{fill:none;stroke:var(--forest);stroke-width:7;stroke-linecap:round;transition:stroke-dashoffset .5s ease;}
+  .ring-leaf{position:absolute;top:-4px;left:50%;transform:translateX(-50%);width:16px;height:16px;}
+  .ring-center{
+    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  }
+  .ring-count{font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:var(--forest-deep);}
+  .ring-label{font-size:9px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-faint);}
+
+  /* toggle todos */
+  .toggle-todos{
+    display:flex;align-items:center;gap:8px;width:100%;
+    margin-top:20px;padding-top:16px;border-top:1px solid var(--sage-line);
+    background:none;border-left:none;border-right:none;border-bottom:none;
+    cursor:pointer;font-weight:800;font-size:13.5px;color:var(--forest);
+  }
+  .toggle-todos svg{width:13px;height:13px;transition:transform .25s ease;stroke:var(--forest);}
+  .toggle-todos.open svg{transform:rotate(180deg);}
+  .toggle-todos .tcount{color:var(--ink-faint);font-weight:700;margin-left:auto;}
+
+  .todo-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease;}
+  .todo-panel.open{grid-template-rows:1fr;}
+  .todo-panel-inner{overflow:hidden;}
+  .todo-list{list-style:none;margin:0;padding:14px 0 0;display:flex;flex-direction:column;gap:3px;}
+  .todo-item{
+    display:flex;align-items:center;gap:11px;padding:8px 6px;border-radius:10px;
+  }
+  .todo-item:hover{background:rgba(168,183,154,0.14);}
+  .leaf-check{
+    width:22px;height:22px;flex-shrink:0;border:none;background:none;cursor:pointer;padding:0;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .leaf-check svg{width:20px;height:20px;transition:transform .2s ease;}
+  .leaf-check path{fill:none;stroke:var(--sage);stroke-width:1.6;transition:fill .2s ease, stroke .2s ease;}
+  .leaf-check.checked path{fill:var(--sage);stroke:var(--sage);}
+  .leaf-check.checked svg{transform:scale(1.08);}
+  .todo-text{flex:1;font-size:14px;color:var(--ink);transition:color .2s ease;}
+  .leaf-check.checked ~ .todo-text, .todo-item.done .todo-text{color:var(--ink-faint);text-decoration:line-through;text-decoration-color:var(--sage-soft);}
+  .todo-day{font-size:11px;font-weight:800;color:var(--ink-faint);letter-spacing:.03em;text-transform:uppercase;}
+
+  /* ============ EMPTY STATE ============ */
+  .empty-state{display:none;flex-direction:column;align-items:center;text-align:center;padding:70px 20px 40px;}
+  .empty-state.show{display:flex;}
+  .goal-grid.hidden{display:none;}
+  .empty-state svg{width:150px;height:150px;margin-bottom:8px;}
+  .empty-state h2{font-size:23px;margin-bottom:10px;}
+  .empty-state p{color:var(--ink-soft);max-width:38ch;font-size:15px;margin-bottom:26px;}
+
+  @media (max-width:520px){
+    .nav-links{display:none;}
+    .page{padding:28px 18px 60px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP NAV ============ -->
+<div class="topnav">
+  <div class="brand">
+    <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+      <polygon points="20,5 32,12 32,26 20,33 8,26 8,12" fill="#D9A24B"/>
+      <ellipse cx="14" cy="17" rx="2.6" ry="1.6" fill="#FBF8F1" transform="rotate(-25 14 17)"/>
+      <ellipse cx="14" cy="12" rx="2.6" ry="1.6" fill="#FBF8F1" transform="rotate(20 14 12)"/>
+      <circle cx="15" cy="14.5" r="2.6" fill="#3B5D42"/>
+      <path d="M27 32C22 34 17 30 18 24C19 18 14 16 15 10" stroke="#A8B79A" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <path d="M20 22C23 21 24 24 21 26" stroke="#A8B79A" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+    </svg>
+    <span>Ivy-Hive</span>
+  </div>
+  <div class="nav-mid">
+    <div class="nav-links">
+      <a href="calendar.html">Calendar</a>
+      <a href="#" class="active">Goals</a>
+      <a href="#">Journal</a>
+    </div>
+  </div>
+  <div class="nav-right">
+    <button class="new-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2C4A33" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      New goal
+    </button>
+    <div class="avatar">A</div>
+  </div>
+</div>
+
+<!-- ============ PAGE ============ -->
+<div class="page">
+  <div class="page-head">
+    <div>
+      <h1>Your Goals</h1>
+      <p>Plant a goal, tend it weekly, watch the ring fill in.</p>
+    </div>
+    <button class="demo-toggle" id="emptyToggle">Preview empty state</button>
+  </div>
+
+  <!-- ============ GOAL GRID ============ -->
+  <div class="goal-grid" id="goalGrid">
+
+    <!-- GOAL 1 -->
+    <div class="goal-card">
+      <div class="goal-top">
+        <div>
+          <h3 class="goal-title">Launch Ivy-Hive beta</h3>
+          <span class="goal-deadline urgent">Due Aug 2</span>
+        </div>
+        <div class="ring-wrap">
+          <svg viewBox="0 0 76 76">
+            <circle class="ring-track" cx="38" cy="38" r="32"/>
+            <circle class="ring-fill" cx="38" cy="38" r="32" stroke-dasharray="201.06" stroke-dashoffset="201.06"/>
+          </svg>
+          <svg class="ring-leaf" viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z" fill="#3B5D42"/><path d="M10 4L7 14" stroke="#FBF8F1" stroke-width="1"/></svg>
+          <div class="ring-center"><span class="ring-count">0/6</span><span class="ring-label">tasks</span></div>
+        </div>
+      </div>
+
+      <button class="toggle-todos" aria-expanded="false">
+        This week's to-dos
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        <span class="tcount">6 tasks</span>
+      </button>
+      <div class="todo-panel">
+        <div class="todo-panel-inner">
+          <ul class="todo-list">
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Finish onboarding flow</span><span class="todo-day">Mon</span></li>
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Write beta invite email</span><span class="todo-day">Tue</span></li>
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Fix calendar sync bug</span><span class="todo-day">Wed</span></li>
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Set up feedback form</span><span class="todo-day">Thu</span></li>
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Recruit 10 testers</span><span class="todo-day">Fri</span></li>
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Draft launch day checklist</span><span class="todo-day">Sun</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- GOAL 2 -->
+    <div class="goal-card">
+      <div class="goal-top">
+        <div>
+          <h3 class="goal-title">Write 10 minutes daily</h3>
+          <span class="goal-deadline">Ongoing</span>
+        </div>
+        <div class="ring-wrap">
+          <svg viewBox="0 0 76 76">
+            <circle class="ring-track" cx="38" cy="38" r="32"/>
+            <circle class="ring-fill" cx="38" cy="38" r="32" stroke-dasharray="201.06" stroke-dashoffset="201.06"/>
+          </svg>
+          <svg class="ring-leaf" viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z" fill="#3B5D42"/><path d="M10 4L7 14" stroke="#FBF8F1" stroke-width="1"/></svg>
+          <div class="ring-center"><span class="ring-count">0/7</span><span class="ring-label">tasks</span></div>
+        </div>
+      </div>
+
+      <button class="toggle-todos" aria-expanded="false">
+        This week's to-dos
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        <span class="tcount">7 tasks</span>
+      </button>
+      <div class="todo-panel">
+        <div class="todo-panel-inner">
+          <ul class="todo-list">
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Morning pages</span><span class="todo-day">Mon</span></li>
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Morning pages</span><span class="todo-day">Tue</span></li>
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Morning pages</span><span class="todo-day">Wed</span></li>
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Morning pages</span><span class="todo-day">Thu</span></li>
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Morning pages</span><span class="todo-day">Fri</span></li>
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Morning pages</span><span class="todo-day">Sat</span></li>
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Morning pages</span><span class="todo-day">Sun</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- GOAL 3 -->
+    <div class="goal-card">
+      <div class="goal-top">
+        <div>
+          <h3 class="goal-title">Learn perennial gardening</h3>
+          <span class="goal-deadline">Due Oct 1</span>
+        </div>
+        <div class="ring-wrap">
+          <svg viewBox="0 0 76 76">
+            <circle class="ring-track" cx="38" cy="38" r="32"/>
+            <circle class="ring-fill" cx="38" cy="38" r="32" stroke-dasharray="201.06" stroke-dashoffset="201.06"/>
+          </svg>
+          <svg class="ring-leaf" viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z" fill="#3B5D42"/><path d="M10 4L7 14" stroke="#FBF8F1" stroke-width="1"/></svg>
+          <div class="ring-center"><span class="ring-count">0/5</span><span class="ring-label">tasks</span></div>
+        </div>
+      </div>
+
+      <button class="toggle-todos" aria-expanded="false">
+        This week's to-dos
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        <span class="tcount">5 tasks</span>
+      </button>
+      <div class="todo-panel">
+        <div class="todo-panel-inner">
+          <ul class="todo-list">
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Read chapter on soil types</span><span class="todo-day">Mon</span></li>
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Sketch bed layout</span><span class="todo-day">Wed</span></li>
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Visit the local nursery</span><span class="todo-day">Thu</span></li>
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Test soil pH</span><span class="todo-day">Sat</span></li>
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Order bare-root perennials</span><span class="todo-day">Sun</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- GOAL 4 -->
+    <div class="goal-card">
+      <div class="goal-top">
+        <div>
+          <h3 class="goal-title">Move body 4x a week</h3>
+          <span class="goal-deadline">Ongoing</span>
+        </div>
+        <div class="ring-wrap">
+          <svg viewBox="0 0 76 76">
+            <circle class="ring-track" cx="38" cy="38" r="32"/>
+            <circle class="ring-fill" cx="38" cy="38" r="32" stroke-dasharray="201.06" stroke-dashoffset="201.06"/>
+          </svg>
+          <svg class="ring-leaf" viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z" fill="#3B5D42"/><path d="M10 4L7 14" stroke="#FBF8F1" stroke-width="1"/></svg>
+          <div class="ring-center"><span class="ring-count">0/4</span><span class="ring-label">tasks</span></div>
+        </div>
+      </div>
+
+      <button class="toggle-todos" aria-expanded="false">
+        This week's to-dos
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        <span class="tcount">4 tasks</span>
+      </button>
+      <div class="todo-panel">
+        <div class="todo-panel-inner">
+          <ul class="todo-list">
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Morning walk</span><span class="todo-day">Mon</span></li>
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Yoga session</span><span class="todo-day">Wed</span></li>
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Garden bed digging</span><span class="todo-day">Fri</span></li>
+            <li class="todo-item"><button class="leaf-check" aria-pressed="false"><svg viewBox="0 0 20 20"><path d="M10 3C5 5 3 10 4 16C10 16 16 12 16 6C16 4 13 3 10 3Z"/></svg></button><span class="todo-text">Long weekend hike</span><span class="todo-day">Sat</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============ EMPTY STATE ============ -->
+  <div class="empty-state" id="emptyState">
+    <svg viewBox="0 0 200 200" fill="none">
+      <ellipse cx="100" cy="176" rx="52" ry="8" fill="#E4D9C0" opacity="0.6"/>
+      <path d="M64 168 L70 118 C70 118 66 116 66 110 L74 110 C74 116 70 118 70 118" fill="#EDE4CD" stroke="#3B5D42" stroke-width="0" opacity="0"/>
+      <!-- pot -->
+      <path d="M70 130 L130 130 L122 172 C122 176 118 178 114 178 L86 178 C82 178 78 176 78 172 Z" fill="#EDE4CD" stroke="#C9B98C" stroke-width="2"/>
+      <ellipse cx="100" cy="130" rx="30" ry="7" fill="#DDCBA0" stroke="#C9B98C" stroke-width="2"/>
+      <ellipse cx="100" cy="128" rx="24" ry="5" fill="#7A5A34" opacity="0.4"/>
+      <!-- stem -->
+      <path d="M100 128 C 98 108, 104 92, 100 74" stroke="#3B5D42" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+      <!-- leaves -->
+      <path d="M100 108C88 104 82 92 86 82C98 84 104 96 100 108Z" fill="#A8B79A" stroke="#3B5D42" stroke-width="1.6"/>
+      <path d="M100 96C112 92 118 80 114 70C102 72 96 84 100 96Z" fill="#A8B79A" stroke="#3B5D42" stroke-width="1.6"/>
+      <path d="M100 78C92 74 88 64 92 56C102 58 106 68 100 78Z" fill="#C9D4BE" stroke="#3B5D42" stroke-width="1.6"/>
+      <!-- dew drop -->
+      <circle cx="107" cy="66" r="3" fill="#D9A24B" opacity="0.85"/>
+      <!-- little ground sparkles -->
+      <circle cx="60" cy="176" r="2.4" fill="#D9A24B" opacity="0.6"/>
+      <circle cx="142" cy="172" r="2" fill="#A8B79A" opacity="0.6"/>
+    </svg>
+    <h2>Nothing planted yet</h2>
+    <p>Your goals will grow here once you plant one — start with something small, water it weekly, and watch it bloom.</p>
+    <button class="new-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2C4A33" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Plant your first goal
+    </button>
+  </div>
+
+</div>
+
+<script>
+  const CIRC = 201.06;
+
+  function updateRing(card){
+    const boxes = card.querySelectorAll('.leaf-check');
+    const checked = card.querySelectorAll('.leaf-check.checked').length;
+    const total = boxes.length;
+    const pct = total ? checked/total : 0;
+    const ringFill = card.querySelector('.ring-fill');
+    ringFill.style.strokeDashoffset = CIRC * (1 - pct);
+    card.querySelector('.ring-count').textContent = checked + '/' + total;
+  }
+
+  document.querySelectorAll('.leaf-check').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const isChecked = btn.classList.toggle('checked');
+      btn.setAttribute('aria-pressed', isChecked ? 'true' : 'false');
+      btn.closest('.todo-item').classList.toggle('done', isChecked);
+      updateRing(btn.closest('.goal-card'));
+    });
+  });
+
+  document.querySelectorAll('.toggle-todos').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const panel = btn.nextElementSibling;
+      const open = panel.classList.toggle('open');
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+
+  document.querySelectorAll('.goal-card').forEach(updateRing);
+
+  const emptyToggle = document.getElementById('emptyToggle');
+  const emptyState = document.getElementById('emptyState');
+  const goalGrid = document.getElementById('goalGrid');
+  let showingEmpty = false;
+  emptyToggle.addEventListener('click', () => {
+    showingEmpty = !showingEmpty;
+    emptyState.classList.toggle('show', showingEmpty);
+    goalGrid.classList.toggle('hidden', showingEmpty);
+    emptyToggle.textContent = showingEmpty ? 'Back to goals' : 'Preview empty state';
+  });
+</script>
+
+</body>
+</html>
