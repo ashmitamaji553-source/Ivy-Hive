@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ivy-Hive — Tend your days like a garden</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --beige:#F5EFE3;
+    --cream:#FBF8F1;
+    --sage:#A8B79A;
+    --sage-soft:#C9D4BE;
+    --forest:#3B5D42;
+    --forest-deep:#2C4A33;
+    --honey:#D9A24B;
+    --honey-soft:#EAC685;
+    --ink:#33402F;
+    --ink-soft:#5C6B54;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--beige);
+    color:var(--ink);
+    font-family:'Nunito',sans-serif;
+    font-size:17px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    color:var(--forest-deep);
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  p{margin:0;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  section{padding:0 24px;}
+  .wrap{max-width:1120px;margin:0 auto;}
+
+  :focus-visible{outline:3px solid var(--honey);outline-offset:3px;border-radius:4px;}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    max-width:1120px;margin:0 auto;padding:28px 24px 8px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-size:22px;color:var(--forest-deep);font-weight:600;}
+  .brand svg{width:30px;height:30px;}
+  .nav-links{display:flex;align-items:center;gap:36px;}
+  .nav-links a{font-weight:700;font-size:14.5px;color:var(--ink-soft);letter-spacing:.02em;transition:color .2s;}
+  .nav-links a:hover{color:var(--forest);}
+  .nav-cta{display:none;}
+  @media(min-width:760px){.nav-cta{display:inline-flex;}}
+
+  /* ---------- HEX BUTTON ---------- */
+  .hex-btn{
+    position:relative;
+    display:inline-flex;align-items:center;justify-content:center;
+    padding:18px 46px;
+    font-family:'Nunito',sans-serif;
+    font-weight:800;
+    font-size:15px;
+    letter-spacing:.02em;
+    color:var(--cream);
+    background:var(--forest);
+    clip-path:polygon(14% 0%,86% 0%,100% 50%,86% 100%,14% 100%,0% 50%);
+    border:none;cursor:pointer;
+    transition:background .25s ease, transform .2s ease;
+  }
+  .hex-btn:hover{background:var(--honey);color:var(--forest-deep);transform:translateY(-2px);}
+  .hex-btn.small{padding:14px 34px;font-size:13.5px;}
+  .hex-btn.ghost{
+    background:transparent;
+    color:var(--forest);
+    box-shadow:inset 0 0 0 2px var(--forest);
+  }
+  .hex-btn.ghost:hover{background:var(--forest);color:var(--cream);}
+
+  /* ---------- HERO ---------- */
+  .hero{padding-top:36px;}
+  .hero-grid{
+    display:grid;grid-template-columns:1fr;gap:52px;align-items:center;
+    padding-bottom:40px;
+  }
+  @media(min-width:900px){.hero-grid{grid-template-columns:1.05fr 0.95fr;}}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:13px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--forest);background:var(--sage-soft);
+    padding:7px 16px 7px 14px;border-radius:999px;margin-bottom:22px;
+  }
+  .eyebrow::before{content:"❦";font-size:13px;}
+  .hero h1{font-size:clamp(38px,5.4vw,58px);line-height:1.08;}
+  .hero h1 em{font-style:italic;color:var(--honey);}
+  .hero-sub{margin-top:22px;font-size:18px;color:var(--ink-soft);max-width:46ch;}
+  .hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:22px;margin-top:34px;}
+  .hero-link{font-weight:800;font-size:14.5px;color:var(--forest);border-bottom:2px solid var(--honey);padding-bottom:2px;}
+
+  .hero-art{position:relative;}
+
+  /* ---------- IVY DIVIDER ---------- */
+  .vine-divider{padding:6px 24px;}
+  .vine-divider .wrap{padding:18px 0;}
+  .vine-divider svg{width:100%;height:auto;}
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section-head{max-width:640px;margin:0 auto 52px;text-align:center;}
+  .section-head .eyebrow{margin-bottom:16px;}
+  .section-head h2{font-size:clamp(28px,3.6vw,38px);}
+  .section-head p{margin-top:16px;color:var(--ink-soft);font-size:16.5px;}
+
+  /* ---------- FEATURES ---------- */
+  .features{padding:70px 24px;}
+  .feature-grid{display:grid;grid-template-columns:1fr;gap:26px;}
+  @media(min-width:760px){.feature-grid{grid-template-columns:repeat(3,1fr);}}
+  .feature-card{
+    background:var(--cream);
+    border:1.5px solid var(--sage-soft);
+    border-radius:28px;
+    padding:34px 30px;
+    position:relative;
+    overflow:hidden;
+  }
+  .feature-card .leaf-corner{position:absolute;top:-18px;right:-18px;width:80px;height:80px;opacity:.5;}
+  .feature-icon{
+    width:54px;height:54px;border-radius:16px;
+    background:var(--sage-soft);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:20px;
+  }
+  .feature-icon svg{width:28px;height:28px;}
+  .feature-card h3{font-size:21px;margin-bottom:10px;}
+  .feature-card p{color:var(--ink-soft);font-size:15.5px;}
+  .feature-tag{
+    display:inline-block;margin-top:18px;font-size:12.5px;font-weight:800;
+    letter-spacing:.04em;text-transform:uppercase;color:var(--honey);
+  }
+
+  /* ---------- HOW IT GROWS (timeline) ---------- */
+  .grows{padding:70px 24px 90px;}
+  .timeline{
+    display:grid;grid-template-columns:1fr;gap:0;position:relative;
+  }
+  @media(min-width:800px){.timeline{grid-template-columns:repeat(3,1fr);}}
+  .stage{
+    padding:28px 22px;position:relative;text-align:center;
+  }
+  .stage-mark{
+    width:64px;height:64px;margin:0 auto 20px;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--beige);
+    border:2px solid var(--forest);
+    border-radius:50%;
+    font-family:'Fraunces',serif;font-style:italic;font-size:22px;color:var(--forest);
+    position:relative;z-index:2;
+  }
+  .stage h3{font-size:19px;margin-bottom:8px;}
+  .stage p{color:var(--ink-soft);font-size:15px;max-width:30ch;margin:0 auto;}
+  .stage-connector{display:none;}
+  @media(min-width:800px){
+    .stage-connector{
+      display:block;position:absolute;top:32px;left:50%;width:100%;height:2px;
+      background-image:repeating-linear-gradient(90deg,var(--sage) 0 8px, transparent 8px 16px);
+      z-index:1;
+    }
+    .stage:last-child .stage-connector{display:none;}
+  }
+
+  /* ---------- QUOTE ---------- */
+  .quote-section{padding:20px 24px 90px;}
+  .quote-card{
+    max-width:760px;margin:0 auto;
+    background:var(--sage-soft);
+    border-radius:32px;
+    padding:56px clamp(28px,6vw,72px);
+    text-align:center;
+    position:relative;
+  }
+  .quote-card svg.quote-mark{width:38px;height:38px;margin:0 auto 18px;}
+  .quote-card p.quote-text{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:500;
+    font-size:clamp(20px,2.6vw,26px);color:var(--forest-deep);line-height:1.5;
+  }
+  .quote-card .quote-by{margin-top:22px;font-weight:800;font-size:13.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--forest);}
+
+  /* ---------- CTA BANNER ---------- */
+  .cta-banner{padding:0 24px 90px;}
+  .cta-inner{
+    max-width:1120px;margin:0 auto;
+    background:var(--forest-deep);
+    border-radius:36px;
+    padding:clamp(46px,7vw,80px) clamp(24px,6vw,64px);
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .cta-inner h2{color:var(--cream);font-size:clamp(28px,4vw,42px);max-width:18ch;margin:0 auto 16px;}
+  .cta-inner p{color:var(--sage-soft);font-size:16.5px;max-width:44ch;margin:0 auto 34px;}
+  .honeycomb-bg{position:absolute;inset:0;opacity:.14;pointer-events:none;}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:50px 24px 40px;}
+  .footer-grid{
+    display:flex;flex-wrap:wrap;gap:32px;justify-content:space-between;align-items:flex-start;
+    max-width:1120px;margin:0 auto;padding-bottom:28px;
+  }
+  .footer-brand p{color:var(--ink-soft);font-size:14.5px;margin-top:10px;max-width:32ch;}
+  .footer-cols{display:flex;flex-wrap:wrap;gap:56px;}
+  .footer-col h4{font-family:'Fraunces',serif;font-weight:600;font-size:15px;color:var(--forest-deep);margin-bottom:14px;}
+  .footer-col a{display:block;font-size:14.5px;color:var(--ink-soft);margin-bottom:10px;}
+  .footer-col a:hover{color:var(--forest);}
+  .footer-bottom{
+    max-width:1120px;margin:0 auto;padding-top:24px;border-top:1.5px solid var(--sage-soft);
+    display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
+    font-size:13px;color:var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <a class="brand" href="#top" aria-label="Ivy-Hive home">
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="20,3 34,11.5 34,28.5 20,37 6,28.5 6,11.5" fill="#D9A24B" opacity="0.9"/>
+      <path d="M13 24C13 24 15 14 22 12C22 12 20 18 24 18C24 18 21 21 17 21C17 21 20 24 24 22" stroke="#3B5D42" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+    </svg>
+    Ivy-Hive
+  </a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#grows">How it grows</a>
+    <a href="#story">Story</a>
+  </div>
+  <a href="#start" class="hex-btn small nav-cta">Get Started</a>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">A gentle planner for a slower life</span>
+      <h1>Tend your days<br>like <em>a garden.</em></h1>
+      <p class="hero-sub">Ivy-Hive turns your schedule into something worth tending — plant a goal as a seed, give it a little daily light, and watch the week bloom around it.</p>
+      <div class="hero-actions">
+        <a href="#start" class="hex-btn">Get Started</a>
+        <a href="#grows" class="hero-link">See how it grows →</a>
+      </div>
+    </div>
+
+    <div class="hero-art">
+      <!-- Hand-drawn botanical illustration: honeycomb clock wrapped in ivy, with a bee -->
+      <svg viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="240" cy="240" r="210" fill="#EFE7D4"/>
+
+        <!-- honeycomb clock face -->
+        <g transform="translate(240,232)">
+          <polygon points="0,-98 85,-49 85,49 0,98 -85,49 -85,-49" fill="#FBF8F1" stroke="#3B5D42" stroke-width="3"/>
+          <!-- clock ticks -->
+          <g stroke="#A8B79A" stroke-width="3" stroke-linecap="round">
+            <line x1="0" y1="-78" x2="0" y2="-66"/>
+            <line x1="0" y1="78" x2="0" y2="66"/>
+            <line x1="-67" y1="-39" x2="-58" y2="-33"/>
+            <line x1="67" y1="-39" x2="58" y2="-33"/>
+            <line x1="-67" y1="39" x2="-58" y2="33"/>
+            <line x1="67" y1="39" x2="58" y2="33"/>
+          </g>
+          <!-- hands -->
+          <line x1="0" y1="0" x2="0" y2="-46" stroke="#3B5D42" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="0" y1="0" x2="34" y2="14" stroke="#D9A24B" stroke-width="4.5" stroke-linecap="round"/>
+          <circle cx="0" cy="0" r="6" fill="#3B5D42"/>
+        </g>
+
+        <!-- ivy vine wrapping the hexagon, hand-drawn wobble -->
+        <path d="M105 340 C 90 300, 130 280, 120 240 C 110 200, 70 190, 80 150 C 90 112, 140 108, 150 78"
+              fill="none" stroke="#3B5D42" stroke-width="4" stroke-linecap="round"/>
+        <path d="M105 340 C 90 300, 130 280, 120 240 C 110 200, 70 190, 80 150 C 90 112, 140 108, 150 78"
+              fill="none" stroke="#A8B79A" stroke-width="1.6" stroke-linecap="round" opacity="0.6" transform="translate(2,2)"/>
+
+        <!-- leaves along vine -->
+        <g fill="#A8B79A" stroke="#3B5D42" stroke-width="1.4">
+          <path d="M118 235 C 138 228, 148 244, 132 258 C 116 250, 108 240, 118 235 Z"/>
+          <path d="M84 155 C 64 148, 58 168, 76 180 C 92 170, 96 160, 84 155 Z"/>
+          <path d="M148 100 C 168 92, 176 110, 160 122 C 144 114, 138 105, 148 100 Z"/>
+          <path d="M98 305 C 78 300, 74 320, 92 330 C 108 320, 110 310, 98 305 Z"/>
+        </g>
+
+        <!-- little honey-amber flowers -->
+        <g fill="#D9A24B">
+          <circle cx="128" cy="196" r="5.5"/>
+          <circle cx="107" cy="275" r="5"/>
+          <circle cx="160" cy="130" r="4.5"/>
+        </g>
+
+        <!-- second vine, right side -->
+        <path d="M378 330 C 396 292, 358 270, 368 232 C 378 196, 416 190, 404 152"
+              fill="none" stroke="#3B5D42" stroke-width="4" stroke-linecap="round"/>
+        <g fill="#A8B79A" stroke="#3B5D42" stroke-width="1.4">
+          <path d="M368 228 C 348 220, 340 238, 356 252 C 372 244, 378 234, 368 228 Z"/>
+          <path d="M402 158 C 422 150, 428 170, 410 182 C 394 174, 390 164, 402 158 Z"/>
+        </g>
+        <circle cx="392" cy="196" r="5" fill="#D9A24B"/>
+
+        <!-- little bee -->
+        <g transform="translate(322,120) rotate(-18)">
+          <ellipse cx="0" cy="0" rx="13" ry="9" fill="#D9A24B"/>
+          <path d="M-9 -3 L9 -3 M-7 3 L7 3" stroke="#3B5D42" stroke-width="2.4" stroke-linecap="round"/>
+          <ellipse cx="6" cy="-8" rx="7" ry="4.5" fill="#FBF8F1" stroke="#3B5D42" stroke-width="1" opacity="0.85" transform="rotate(-20 6 -8)"/>
+          <ellipse cx="-2" cy="-9" rx="7" ry="4.5" fill="#FBF8F1" stroke="#3B5D42" stroke-width="1" opacity="0.85" transform="rotate(10 -2 -9)"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- ============ IVY DIVIDER ============ -->
+<div class="vine-divider" aria-hidden="true">
+  <div class="wrap">
+    <svg viewBox="0 0 1000 46" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 24 C 60 4, 100 44, 160 24 C 220 4, 260 44, 320 24 C 380 4, 420 44, 480 24 C 540 4, 580 44, 640 24 C 700 4, 740 44, 800 24 C 860 4, 900 44, 960 24 C 980 17, 990 20, 1000 24"
+            fill="none" stroke="#A8B79A" stroke-width="2.4" stroke-linecap="round"/>
+      <g fill="#A8B79A" stroke="#3B5D42" stroke-width="1">
+        <ellipse cx="80" cy="12" rx="9" ry="5" transform="rotate(-30 80 12)"/>
+        <ellipse cx="240" cy="12" rx="9" ry="5" transform="rotate(-30 240 12)"/>
+        <ellipse cx="400" cy="12" rx="9" ry="5" transform="rotate(-30 400 12)"/>
+        <ellipse cx="560" cy="12" rx="9" ry="5" transform="rotate(-30 560 12)"/>
+        <ellipse cx="720" cy="12" rx="9" ry="5" transform="rotate(-30 720 12)"/>
+        <ellipse cx="880" cy="12" rx="9" ry="5" transform="rotate(-30 880 12)"/>
+      </g>
+      <g fill="#D9A24B">
+        <circle cx="160" cy="37" r="4"/>
+        <circle cx="480" cy="37" r="4"/>
+        <circle cx="800" cy="37" r="4"/>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<!-- ============ FEATURES ============ -->
+<section class="features" id="features">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Three ways to nurture your days</span>
+      <h2>A little garden for your goals</h2>
+      <p>Every planner has tasks. Ivy-Hive gives them somewhere to grow.</p>
+    </div>
+
+    <div class="feature-grid">
+
+      <div class="feature-card">
+        <svg class="leaf-corner" viewBox="0 0 80 80"><path d="M80 0C60 20 40 20 30 40C20 60 40 80 40 80" stroke="#A8B79A" stroke-width="4" fill="none" stroke-linecap="round"/></svg>
+        <div class="feature-icon">
+          <svg viewBox="0 0 28 28"><rect x="3" y="6" width="22" height="18" rx="4" fill="none" stroke="#3B5D42" stroke-width="2"/><line x1="3" y1="12" x2="25" y2="12" stroke="#3B5D42" stroke-width="2"/><line x1="8" y1="3" x2="8" y2="9" stroke="#3B5D42" stroke-width="2" stroke-linecap="round"/><line x1="20" y1="3" x2="20" y2="9" stroke="#3B5D42" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Beds</h3>
+        <p>Lay out your week in soft, plot-shaped blocks. Drag a task into a bed and it just settles there — no rigid grids, no red overdue banners.</p>
+        <span class="feature-tag">Your schedule</span>
+      </div>
+
+      <div class="feature-card">
+        <svg class="leaf-corner" viewBox="0 0 80 80"><path d="M80 0C60 20 40 20 30 40C20 60 40 80 40 80" stroke="#A8B79A" stroke-width="4" fill="none" stroke-linecap="round"/></svg>
+        <div class="feature-icon">
+          <svg viewBox="0 0 28 28"><circle cx="14" cy="16" r="3" fill="#3B5D42"/><path d="M14 16 C14 8, 8 6, 6 2 M14 16 C14 8, 20 6, 22 2" stroke="#3B5D42" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Seeds</h3>
+        <p>Every goal starts small on purpose. Break it into gentle daily actions, and watch a simple progress vine climb as you keep showing up.</p>
+        <span class="feature-tag">Your goals</span>
+      </div>
+
+      <div class="feature-card">
+        <svg class="leaf-corner" viewBox="0 0 80 80"><path d="M80 0C60 20 40 20 30 40C20 60 40 80 40 80" stroke="#A8B79A" stroke-width="4" fill="none" stroke-linecap="round"/></svg>
+        <div class="feature-icon">
+          <svg viewBox="0 0 28 28"><polygon points="14,2 24,8 24,20 14,26 4,20 4,8" fill="none" stroke="#3B5D42" stroke-width="2"/><circle cx="14" cy="14" r="3.5" fill="#D9A24B"/></svg>
+        </div>
+        <h3>Blooms</h3>
+        <p>Finished weeks turn into pressed-flower keepsakes in your journal — a quiet record of what you tended, not a streak counter shouting at you.</p>
+        <span class="feature-tag">Your progress</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="vine-divider" aria-hidden="true">
+  <div class="wrap">
+    <svg viewBox="0 0 1000 46" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 22 C 60 42, 100 2, 160 22 C 220 42, 260 2, 320 22 C 380 42, 420 2, 480 22 C 540 42, 580 2, 640 22 C 700 42, 740 2, 800 22 C 860 42, 900 2, 960 22 C 980 29, 990 26, 1000 22"
+            fill="none" stroke="#A8B79A" stroke-width="2.4" stroke-linecap="round"/>
+      <g fill="#A8B79A" stroke="#3B5D42" stroke-width="1">
+        <ellipse cx="130" cy="34" rx="9" ry="5" transform="rotate(30 130 34)"/>
+        <ellipse cx="290" cy="34" rx="9" ry="5" transform="rotate(30 290 34)"/>
+        <ellipse cx="450" cy="34" rx="9" ry="5" transform="rotate(30 450 34)"/>
+        <ellipse cx="610" cy="34" rx="9" ry="5" transform="rotate(30 610 34)"/>
+        <ellipse cx="770" cy="34" rx="9" ry="5" transform="rotate(30 770 34)"/>
+        <ellipse cx="930" cy="34" rx="9" ry="5" transform="rotate(30 930 34)"/>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<!-- ============ HOW IT GROWS ============ -->
+<section class="grows" id="grows">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">The rhythm</span>
+      <h2>How a week grows here</h2>
+      <p>Three unhurried stages, on repeat — no other order makes sense for a garden.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="stage">
+        <div class="stage-connector"></div>
+        <div class="stage-mark">i</div>
+        <h3>Sow</h3>
+        <p>Drop your tasks and goals into the week as seeds — just a title and a bed to rest in.</p>
+      </div>
+      <div class="stage">
+        <div class="stage-connector"></div>
+        <div class="stage-mark">ii</div>
+        <h3>Tend</h3>
+        <p>Check in each day. A little watering can nudge marks anything you touched as tended.</p>
+      </div>
+      <div class="stage">
+        <div class="stage-mark">iii</div>
+        <h3>Bloom</h3>
+        <p>Come Sunday, tended seeds open into blooms — a soft, visual record of the week you kept.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUOTE ============ -->
+<section class="quote-section" id="story">
+  <div class="quote-card">
+    <svg class="quote-mark" viewBox="0 0 40 40"><path d="M12 10C6 12 4 18 4 24C4 30 8 33 13 32C18 31 20 26 17 22C15 19 11 20 11 20C11 15 15 12 18 11" stroke="#3B5D42" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>
+    <p class="quote-text">Ivy-Hive is the first planner that didn't make my to-do list feel like a scoreboard. Some weeks it's a full bloom, some weeks just one leaf — and both feel alright.</p>
+    <p class="quote-by">— an early gardener of Ivy-Hive</p>
+  </div>
+</section>
+
+<!-- ============ CTA BANNER ============ -->
+<section class="cta-banner" id="start">
+  <div class="cta-inner">
+    <svg class="honeycomb-bg" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+      <g stroke="#D9A24B" stroke-width="1.4" fill="none">
+        <polygon points="30,10 55,25 55,55 30,70 5,55 5,25"/>
+        <polygon points="80,10 105,25 105,55 80,70 55,55 55,25"/>
+        <polygon points="130,10 155,25 155,55 130,70 105,55 105,25"/>
+        <polygon points="30,70 55,85 55,115 30,130 5,115 5,85"/>
+        <polygon points="80,70 105,85 105,115 80,130 55,115 55,85"/>
+        <polygon points="130,70 155,85 155,115 130,130 105,115 105,85"/>
+        <polygon points="180,10 205,25 205,55 180,70 155,55 155,25"/>
+        <polygon points="180,70 205,85 205,115 180,130 155,115 155,85"/>
+        <polygon points="230,10 255,25 255,55 230,70 205,55 205,25"/>
+        <polygon points="230,70 255,85 255,115 230,130 205,115 205,85"/>
+        <polygon points="280,10 305,25 305,55 280,70 255,55 255,25"/>
+        <polygon points="280,70 305,85 305,115 280,130 255,115 255,85"/>
+        <polygon points="330,10 355,25 355,55 330,70 305,55 305,25"/>
+        <polygon points="330,70 355,85 355,115 330,130 305,115 305,85"/>
+      </g>
+    </svg>
+    <h2>Start a garden you'll actually enjoy tending.</h2>
+    <p>Free to plant your first bed. No credit card, no streak guilt, just a quieter way to keep your week.</p>
+    <a href="#" class="hex-btn">Get Started — it's free</a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="vine-divider" aria-hidden="true" style="padding:0 0 30px;">
+    <svg viewBox="0 0 1000 30" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 15 C 100 2, 200 28, 300 15 C 400 2, 500 28, 600 15 C 700 2, 800 28, 900 15 C 950 9, 980 18, 1000 15"
+            fill="none" stroke="#C9D4BE" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="#top">
+        <svg viewBox="0 0 40 40" fill="none"><polygon points="20,3 34,11.5 34,28.5 20,37 6,28.5 6,11.5" fill="#D9A24B" opacity="0.9"/></svg>
+        Ivy-Hive
+      </a>
+      <p>A gentle planner for people who'd rather grow their week than grind through it.</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="#features">Features</a>
+        <a href="#grows">How it grows</a>
+        <a href="#story">Story</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Journal</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 Ivy-Hive. Tend gently.</span>
+    <span>Made with 🌿 for slow productivity</span>
+  </div>
+</footer>
+
+</body>
+</html>
