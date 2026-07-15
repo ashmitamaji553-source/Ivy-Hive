@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ivy-Hive - Log in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --beige:#F5EFE3;
+    --cream:#FBF8F1;
+    --sage:#A8B79A;
+    --forest:#3B5D42;
+    --forest-deep:#2C4A33;
+    --honey:#D9A24B;
+    --ink:#33402F;
+    --ink-soft:#627058;
+    --roof:#8E5942;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{min-height:100%;}
+  body{
+    margin:0;
+    background:var(--beige);
+    color:var(--ink);
+    font-family:'Nunito',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  button,input{font:inherit;}
+  :focus-visible{outline:3px solid rgba(217,162,75,.55);outline-offset:3px;}
+
+  .auth-shell{
+    min-height:100vh;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(440px,1fr);
+  }
+  .art-panel{
+    position:relative;
+    overflow:hidden;
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 14% 16%, rgba(251,248,241,.76) 0 9%, transparent 10%),
+      linear-gradient(180deg, #DCE9D5 0%, #C9DBBE 46%, #8EA778 100%);
+  }
+  .art-panel::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(90deg, rgba(44,74,51,.16) 0 1px, transparent 1px 78px),
+      linear-gradient(180deg, rgba(44,74,51,.12) 0 1px, transparent 1px 82px);
+    opacity:.28;
+  }
+  .brand-badge{
+    position:absolute;
+    top:28px;
+    left:30px;
+    z-index:2;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    color:var(--forest-deep);
+    font-family:'Fraunces',serif;
+    font-size:22px;
+    font-weight:600;
+  }
+  .brand-mark{
+    width:34px;
+    height:34px;
+    display:grid;
+    place-items:center;
+    background:var(--honey);
+    clip-path:polygon(25% 4%,75% 4%,100% 50%,75% 96%,25% 96%,0 50%);
+  }
+  .brand-mark svg{width:22px;height:22px;}
+  .cottage-scene{
+    position:absolute;
+    inset:auto 0 0;
+    width:100%;
+    height:min(78vh,760px);
+  }
+  .hill{
+    position:absolute;
+    left:-12%;
+    right:-14%;
+    bottom:-10%;
+    height:36%;
+    background:#6F8B61;
+    border-radius:50% 50% 0 0 / 70% 70% 0 0;
+  }
+  .hill.back{
+    left:12%;
+    right:-26%;
+    bottom:10%;
+    height:30%;
+    background:#A8B79A;
+  }
+  .cottage{
+    position:absolute;
+    left:50%;
+    bottom:17%;
+    width:min(72%,520px);
+    aspect-ratio:1.22;
+    transform:translateX(-50%);
+  }
+  .cottage-body{
+    position:absolute;
+    left:10%;
+    right:10%;
+    bottom:0;
+    height:56%;
+    background:#F6EBD7;
+    border:3px solid var(--forest-deep);
+    border-radius:5px 5px 20px 20px;
+    box-shadow:0 28px 42px rgba(44,74,51,.24);
+  }
+  .roof{
+    position:absolute;
+    left:1%;
+    right:1%;
+    bottom:48%;
+    height:44%;
+    background:var(--roof);
+    clip-path:polygon(50% 0,100% 70%,88% 82%,50% 30%,12% 82%,0 70%);
+  }
+  .roof::after{
+    content:"";
+    position:absolute;
+    inset:12% 9% auto;
+    height:38%;
+    border-radius:50%;
+    border-top:12px solid rgba(255,255,255,.14);
+  }
+  .door{
+    position:absolute;
+    left:42%;
+    bottom:0;
+    width:16%;
+    height:40%;
+    background:var(--forest);
+    border:3px solid var(--forest-deep);
+    border-bottom:0;
+    border-radius:999px 999px 0 0;
+  }
+  .door::after{
+    content:"";
+    position:absolute;
+    right:16%;
+    top:48%;
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--honey);
+  }
+  .window{
+    position:absolute;
+    top:28%;
+    width:18%;
+    aspect-ratio:1;
+    background:#FDF8E9;
+    border:3px solid var(--forest);
+    border-radius:50% 50% 8px 8px;
+  }
+  .window.left{left:19%;}
+  .window.right{right:19%;}
+  .window::before,.window::after{content:"";position:absolute;background:var(--sage);}
+  .window::before{left:50%;top:10%;bottom:8%;width:2px;}
+  .window::after{top:50%;left:8%;right:8%;height:2px;}
+  .ivy{position:absolute;inset:19% 4% 12%;pointer-events:none;}
+  .ivy span{
+    position:absolute;
+    width:18px;
+    height:24px;
+    background:var(--sage);
+    border:2px solid var(--forest);
+    border-radius:90% 0 90% 0;
+    transform:rotate(var(--r));
+  }
+  .ivy span:nth-child(1){left:14%;top:6%;--r:-28deg;}
+  .ivy span:nth-child(2){left:20%;top:21%;--r:32deg;}
+  .ivy span:nth-child(3){left:28%;top:9%;--r:-16deg;}
+  .ivy span:nth-child(4){right:16%;top:11%;--r:42deg;}
+  .ivy span:nth-child(5){right:24%;top:28%;--r:-34deg;}
+  .ivy span:nth-child(6){right:31%;top:12%;--r:20deg;}
+  .hive{position:absolute;right:7%;bottom:18%;width:92px;height:112px;}
+  .hive-rope{position:absolute;left:50%;top:-58px;width:2px;height:66px;background:var(--forest);}
+  .hive-body{
+    position:absolute;
+    inset:16px 6px 0;
+    background:var(--honey);
+    border:3px solid var(--forest-deep);
+    border-radius:42px 42px 18px 18px;
+    overflow:hidden;
+  }
+  .hive-body span{display:block;height:18px;border-bottom:3px solid rgba(44,74,51,.35);}
+  .hive-door{
+    position:absolute;
+    left:50%;
+    bottom:14px;
+    width:24px;
+    height:18px;
+    background:var(--forest-deep);
+    border-radius:50% 50% 4px 4px;
+    transform:translateX(-50%);
+  }
+  .bee{position:absolute;width:28px;height:18px;background:var(--honey);border:2px solid var(--forest-deep);border-radius:50%;}
+  .bee::before,.bee::after{
+    content:"";
+    position:absolute;
+    top:-8px;
+    width:13px;
+    height:9px;
+    background:rgba(251,248,241,.76);
+    border:1px solid var(--forest);
+    border-radius:50%;
+  }
+  .bee::before{left:4px;transform:rotate(-22deg);}
+  .bee::after{right:1px;transform:rotate(22deg);}
+  .bee.one{right:19%;bottom:44%;}
+  .bee.two{right:31%;bottom:30%;transform:scale(.8) rotate(-10deg);}
+
+  .form-panel{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:44px clamp(28px,6vw,86px);
+    background:var(--beige);
+  }
+  .auth-form{width:min(100%,430px);}
+  .kicker{
+    color:var(--forest);
+    font-weight:800;
+    font-size:13px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  h1{
+    margin:12px 0 8px;
+    color:var(--forest-deep);
+    font-family:'Fraunces',serif;
+    font-size:clamp(34px,5vw,48px);
+    font-weight:500;
+    line-height:1.05;
+  }
+  .tagline{
+    margin:0 0 32px;
+    color:var(--ink-soft);
+    font-family:'Fraunces',serif;
+    font-size:19px;
+    font-style:italic;
+  }
+  .field{display:grid;gap:8px;margin-bottom:18px;}
+  label{color:var(--forest-deep);font-size:14px;font-weight:800;}
+  input{
+    width:100%;
+    height:52px;
+    padding:0 16px;
+    color:var(--ink);
+    background:var(--cream);
+    border:2px solid var(--sage);
+    border-radius:8px;
+    transition:border-color .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  input::placeholder{color:#88927F;}
+  input:focus{
+    outline:0;
+    border-color:var(--forest);
+    box-shadow:0 0 0 4px rgba(59,93,66,.13);
+    background:#FFFCF5;
+  }
+  .form-options{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:16px;
+    margin:-2px 0 22px;
+  }
+  .remember{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    color:var(--ink-soft);
+    font-size:14px;
+    font-weight:700;
+  }
+  .remember input{
+    width:18px;
+    height:18px;
+    accent-color:var(--forest);
+  }
+  .text-link{
+    color:var(--forest);
+    font-weight:800;
+    border-bottom:2px solid rgba(217,162,75,.65);
+  }
+  .primary-btn,.google-btn{
+    width:100%;
+    min-height:52px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:800;
+    transition:transform .2s ease, background .2s ease, border-color .2s ease;
+  }
+  .primary-btn{
+    color:var(--cream);
+    background:var(--forest);
+    border:2px solid var(--forest);
+  }
+  .primary-btn:hover{background:var(--forest-deep);transform:translateY(-1px);}
+  .divider{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin:22px 0;
+    color:var(--ink-soft);
+    font-size:13px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+  }
+  .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--sage);}
+  .google-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    color:var(--forest-deep);
+    background:var(--beige);
+    border:1.5px solid var(--sage);
+  }
+  .google-btn:hover{border-color:var(--forest);background:#EFE6D6;}
+  .google-icon{
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    color:var(--forest);
+    background:var(--cream);
+    border:1px solid var(--sage);
+    font-weight:800;
+  }
+  .switch-copy{margin:26px 0 0;color:var(--ink-soft);text-align:center;}
+
+  @media(max-width:860px){
+    .auth-shell{grid-template-columns:1fr;}
+    .art-panel{min-height:38vh;}
+    .cottage-scene{height:42vh;}
+    .form-panel{min-height:auto;padding:38px 24px 46px;}
+    .brand-badge{top:20px;left:22px;}
+  }
+  @media(max-width:520px){
+    h1{font-size:34px;}
+    .tagline{font-size:17px;}
+    .cottage{width:86%;}
+    .hive{right:2%;transform:scale(.82);}
+    .form-options{align-items:flex-start;flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+  <main class="auth-shell">
+    <section class="art-panel" aria-label="Ivy-covered cottage with a beehive">
+      <a class="brand-badge" href="index.html" aria-label="Ivy-Hive home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M7 14C7 14 8 8 14 6C14 6 12.5 11 16 11C16 11 13 14 9.5 13C9.5 13 12 16 16 15" stroke="#2C4A33" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </span>
+        Ivy-Hive
+      </a>
+      <div class="cottage-scene" aria-hidden="true">
+        <div class="hill back"></div>
+        <div class="hill"></div>
+        <div class="cottage">
+          <div class="roof"></div>
+          <div class="cottage-body">
+            <div class="window left"></div>
+            <div class="window right"></div>
+            <div class="door"></div>
+            <div class="ivy">
+              <span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+        <div class="hive">
+          <div class="hive-rope"></div>
+          <div class="hive-body"><span></span><span></span><span></span><span></span></div>
+          <div class="hive-door"></div>
+        </div>
+        <div class="bee one"></div>
+        <div class="bee two"></div>
+      </div>
+    </section>
+
+    <section class="form-panel" aria-labelledby="login-title">
+      <form class="auth-form">
+        <div class="kicker">Welcome back</div>
+        <h1 id="login-title">Log in to Ivy-Hive</h1>
+        <p class="tagline">Grow your goals, one day at a time</p>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Your password" required>
+        </div>
+        <div class="form-options">
+          <label class="remember" for="remember"><input id="remember" name="remember" type="checkbox">Remember me</label>
+          <a class="text-link" href="#">Forgot password?</a>
+        </div>
+
+        <button class="primary-btn" type="submit">Log in</button>
+        <div class="divider">or</div>
+        <button class="google-btn" type="button"><span class="google-icon">G</span>Continue with Google</button>
+        <p class="switch-copy">New to Ivy-Hive? <a class="text-link" href="signup.html">Create an account</a></p>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
