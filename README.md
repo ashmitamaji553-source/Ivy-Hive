@@ -2,6 +2,10 @@
 
 A cottagecore-themed schedule and goal-tracking web app.
 
+## Database
+
+- **`supabase/migrations/0001_ivy_hive_init.sql`** — Postgres schema for Supabase: `users` (extends `auth.users`), `events`, `goals`, `weekly_tasks`, `tags`. Includes calendar-query indexes and Row Level Security policies so every user can only access their own rows.
+
 ## Pages
 
 - **`index.html`** — marketing landing page (hero, features, "how it grows" timeline, CTA)
