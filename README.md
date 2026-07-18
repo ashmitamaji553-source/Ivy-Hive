@@ -13,6 +13,14 @@ middleware, and protected routes are implemented with `@supabase/ssr`.
 See **[`docs/AUTH_SETUP.md`](docs/AUTH_SETUP.md)** for the file map, install
 step, and Supabase dashboard configuration.
 
+## Events API
+
+Full CRUD on the `events` table, with recurring events (`recurrence_rule`,
+an RFC5545 RRULE string) expanded into concrete instances and grouped by
+day — ready for a week/month calendar grid. See
+**[`docs/EVENTS_API.md`](docs/EVENTS_API.md)** for endpoints, the response
+shape, and example requests.
+
 ## Pages
 
 - **`index.html`** — marketing landing page (hero, features, "how it grows" timeline, CTA)
